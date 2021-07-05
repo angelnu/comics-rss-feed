@@ -12,9 +12,7 @@ Required env variables:
 - RSS_SCRAPPER_URL - Where the generated feeds will be served -> must be reachable by the RSS server
 - COMICS_DEFAULT_FEED_CATEGORY_TITLE - New feeds get added to this category. Default: _GoComics_
 - COMICS_FAVORITE_FEED_CATEGORY_TITLE - Favorite feeds category. Default: _GoComics-always_
-
-# Ignore feeds in this category 
-COMICS_IGNORE_FEED_CATEGORY_TITLE = os.getenv('COMICS_IGNORE_FEED_CATEGORY_TITLE', "GoComics-ignore")
+- COMICS_IGNORE_FEED_CATEGORY_TITLE - Ignore feeds in this category. Default: _GoComics-ignore_
 
 ## Prereqs to build
 

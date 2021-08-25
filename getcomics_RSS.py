@@ -131,7 +131,7 @@ class HomepageParser(HTMLParser):
         if attr[0]=='href':
           href = attr[1]
           # Search for comid_id + date. Example: /the-comic-strip-that-has-a-finale-every-day/2019/12/25
-          matchObj = re.match("/(.+)/\d+/\d+/\d+", href)
+          matchObj = re.match("/(.+) */\d+/\d+/\d+", href)
           if matchObj:
             comic_id = matchObj.group(1)
             self.__comic_ids.append(comic_id)

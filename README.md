@@ -21,7 +21,16 @@ You need to create the following secrets (not needed within the k8s-at-home org 
 - GHCR_USERNAME # Needed to upload container to the Github Container Registry
 - GHCR_TOKEN # Needed to upload container to the Github Container Registry
 
-## How to build
+## How to develop
+
+1. Create an `envfile` to set the required env variables. It should look like this:
+   ```bash
+   RSS_URL=https://rss.${CLUSTER_DOMAIN}/api/
+   RSS_LOGIN=user
+   RSS_PASSWORD="password"
+   XML_FOLDER=/feeds/
+   RSS_SCRAPPER_URL=https://rss.${CLUSTER_DOMAIN}/scrapping
+   ```
 
 2. Build the container
     ```bash

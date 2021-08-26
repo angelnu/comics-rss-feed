@@ -23,13 +23,15 @@ You need to create the following secrets (not needed within the k8s-at-home org 
 
 ## How to develop
 
+### Local
+
 1. Create an `envfile` to set the required env variables. It should look like this:
    ```bash
-   RSS_URL=https://rss.${CLUSTER_DOMAIN}/api/
+   RSS_URL=https://rss.example.com/api/
    RSS_LOGIN=user
    RSS_PASSWORD="password"
    XML_FOLDER=/feeds/
-   RSS_SCRAPPER_URL=https://rss.${CLUSTER_DOMAIN}/scrapping
+   RSS_SCRAPPER_URL=https://rss.example.com/scrapping
    ```
 
 2. Build the container
@@ -39,4 +41,10 @@ You need to create the following secrets (not needed within the k8s-at-home org 
 
 Check the [Makefile] for other build targets
 
+### Visual Code Devcontainer
 
+In Visual Code
+1. Checkout this git repository
+2. Create an `envfile` (see example above)
+3. Click "Connections -> Reopen in container"
+4. Launch [getcomics_RSS.py](getcomics_RSS.py) either from the debugger or the terminal

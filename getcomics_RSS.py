@@ -148,7 +148,7 @@ for url_to_scrap in URLS_TO_SCRAP:
       print(e)
     except: 
       print(("Unknown problem: "+str(url_to_scrap)))
-      print((sys.exc_info()[0]))
+      print((sys.exc_info()[0]), flush=True)
       
     print("Retry in %s seconds" % (RETRIES_WAIT))
     time.sleep(RETRIES_WAIT)
@@ -167,14 +167,14 @@ for url_to_scrap in URLS_TO_SCRAP:
       print("* %s found!" % (comic_id))
       if comics_by_url[feed_url]:
         #Ignored
-        print('  - continue (ignore)')
+        print('  - continue (ignore)', flush=True)
         continue
     else:
       #Adding new comic
-      print(("Adding "+comic_id))
+      print(("Adding "+comic_id), flush=True)
       json_rest_post({"sid":session_id,"op":"subscribeToFeed", "category_id": comics_default_feeds_id, "feed_url": feed_url})
 
-    print(("  - updating feed"))
+    print(("  - updating feed"), flush=True)
     xmlContent = gocomicsScrape.scrape(comic_id)
     with open(feed_file,'w') as xmlfile:
         xmlfile.write(xmlContent)

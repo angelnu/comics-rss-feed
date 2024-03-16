@@ -1,4 +1,4 @@
-FROM python:3.12.2-alpine@sha256:6deafe0dd6043df014df7b78c4da976f008a77d160c8d1857dd83b50d88b2aae
+FROM python:3.12.2-alpine@sha256:25a82f6f8b720a6a257d58e478a0a5517448006e010c85273f4d9c706819478c
 
 RUN pip3 install requests==2.*
 

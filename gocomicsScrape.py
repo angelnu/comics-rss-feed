@@ -15,7 +15,7 @@ XHTML_NS = "http://www.w3.org/1999/xhtml"
 numberOfDaysToScrap = 7
 SLEEP_BETWEEN_COMICS = 10
 SLEEP_BETWEEN_RETRIES = 600
-MAX_RETRIES = 200
+MAX_RETRIES = 2
 
 
 def open_url(url):

@@ -42,9 +42,12 @@ def get_homepage_data(strip_id):
                 self.in_title = False
 
         def handle_data(self, data):
-            if self.in_title:
+            if self.in_title and not self.title:
                 self.title += data
                 self.title = re.sub(r"\s*\|.*$", "", self.title)
+                match_obj = re.match("Read (.*) by .*", self.title)
+                if match_obj:
+                    self.title = match_obj.group(1)
 
     homepage_url = "https://www.gocomics.com/%s" % strip_id
     homepage_file = open_url(homepage_url)
@@ -128,6 +131,7 @@ def scrape(comic_id):
     for strip_date, strip_url in strips:
         counter = 0
         # print time.localtime()
+        strip_image_url = None
         while True:
             try:
                 strip_image_url = get_strip_image_url(strip_url)

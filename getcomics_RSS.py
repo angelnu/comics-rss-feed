@@ -173,7 +173,7 @@ class HomepageParser(HTMLParser):
             data = data.encode("utf-8").decode("unicode_escape")
             data = json.loads(data)
             if "@type" in data.keys() and data["@type"] == "ItemList":
-                # print(data)
+                print(data)
                 for item in data["itemListElement"]:
                     url = item["url"]  # example: 'https://www.gocomics.com/1-and-done'
                     matchObj = re.match(

@@ -15,7 +15,7 @@ XHTML_NS = "http://www.w3.org/1999/xhtml"
 numberOfDaysToScrap = 7
 SLEEP_BETWEEN_COMICS = 10
 SLEEP_BETWEEN_RETRIES = 600
-MAX_RETRIES = 2
+MAX_RETRIES = 0
 
 
 def open_url(url):
@@ -105,7 +105,7 @@ def get_strip_image_url(strip_url):
     try:
         strip_file = open_url(strip_url)
     except urllib.error.HTTPError as e:
-        if e.code == 302:
+        if e.code == 302 or e.code == 404:
             # Skip over strip URLs that generate redirects, they must not have
             # existed.
             return None

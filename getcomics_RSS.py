@@ -205,17 +205,15 @@ for url_to_scrap in URLS_TO_SCRAP:
         raise NameError("No more retries for %s" % (url_to_scrap))
 
     for comic_id in comic_ids:
-        print("")
         feed_path = comic_id + ".xml"
         feed_file = XML_FOLDER + feed_path
         feed_url = RSS_SCRAPPER_URL + "/" + feed_path
 
         if feed_url in comics_by_url:
             # Already known comic
-            print("* %s found!" % (comic_id))
             if comics_by_url[feed_url]:
                 # Ignored
-                print("  - continue (ignore)", flush=True)
+                # print(comic_id + "  - continue (ignore)", flush=True)
                 continue
         else:
             # Adding new comic
@@ -228,7 +226,7 @@ for url_to_scrap in URLS_TO_SCRAP:
                     "feed_url": feed_url,
                 }
             )
-
+        print("\n* %s found!" % (comic_id))
         print(("  - updating feed"), flush=True)
         xmlContent = gocomicsScrape.scrape(comic_id)
         with open(feed_file, "w") as xmlfile:

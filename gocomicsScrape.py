@@ -9,6 +9,7 @@ import urllib.request, urllib.parse, urllib.error
 import xml.dom.minidom
 import json
 from xml.sax.saxutils import escape as xml_escape
+from playwright.sync_api import sync_playwright
 
 XHTML_NS = "http://www.w3.org/1999/xhtml"
 
@@ -19,11 +20,14 @@ MAX_RETRIES = 0
 
 
 def open_url(url):
-    version = "Mozilla/5.0 (compatible; Feedbot/1.0)"
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        page = browser.new_page()
+        page.goto(url)
+        content = page.content() # This will contain the JS-rendered data
+        browser.close()
+        return content
 
-    req = urllib.request.Request(url)
-    req.add_header("User-Agent", version)
-    return urllib.request.urlopen(req)
 
 
 def get_homepage_data(strip_id):
@@ -52,9 +56,8 @@ def get_homepage_data(strip_id):
     homepage_url = "https://www.gocomics.com/%s" % strip_id
     homepage_file = open_url(homepage_url)
     parser = HomepageParser()
-    parser.feed(str(homepage_file.read()))
+    parser.feed(homepage_file)
     parser.close()
-    homepage_file.close()
 
     if not parser.title:
         return None, []
@@ -98,7 +101,7 @@ def get_strip_image_url(strip_url):
                 data = data.encode("utf-8").decode("unicode_escape")
                 data = json.loads(data)
                 if "@type" in data.keys() and data["@type"] == "ImageObject":
-                    print(data)
+                    #print(data)
                     self.image_url = data["url"]
 
     parser = ImageParser()
@@ -111,9 +114,8 @@ def get_strip_image_url(strip_url):
             return None
         else:
             raise
-    parser.feed(str(strip_file.read()))
+    parser.feed(strip_file)
     parser.close()
-    strip_file.close()
 
     return parser.image_url
 
@@ -148,6 +150,7 @@ def scrape(comic_id):
         if not strip_image_url:
             continue
         strip_count += 1
+        print('     ',strip_date.isoformat())
         xmlContent.append("<entry>")
         xmlContent.append(
             "  <title>%s</title>" % xml_escape(strip_date.strftime("%A, %B %d, %Y"))
